@@ -8,9 +8,12 @@ environment:
 
 dependencies:
   bloc: ^8.1.4
+  cloud_firestore: ^5.5.0
   dartz: ^0.10.1
   device_preview: ^1.2.0
   equatable: ^2.0.5
+  firebase_auth: ^5.3.3
+  firebase_core: ^3.8.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
