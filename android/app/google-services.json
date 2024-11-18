@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "242724995960",
+    "project_id": "available-5b1f4",
+    "storage_bucket": "available-5b1f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242724995960:android:c33f786929a586db877e8d",
+        "android_client_info": {
+          "package_name": "co.akundadababalei.course_rep_management_panel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-MREh4UiEShYc243OccmSe5zFMjy8_Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
