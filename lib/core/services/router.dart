@@ -1,8 +1,22 @@
+import 'package:course_rep_management_panel/core/utils/core_utils.dart';
+import 'package:course_rep_management_panel/core/utils/enums/log_level.dart';
+import 'package:course_rep_management_panel/core/utils/typedefs.dart';
+import 'package:course_rep_management_panel/src/academic_structure/presentation/views/course_levels_view.dart';
+import 'package:course_rep_management_panel/src/academic_structure/presentation/views/faculties_view.dart';
+import 'package:course_rep_management_panel/src/academic_structure/presentation/views/faculty_courses_view.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/login_screen.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/sign_up_screen.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/verify_email_screen.dart';
+import 'package:course_rep_management_panel/src/course_representative/domain/entities/course_representative.dart';
+import 'package:course_rep_management_panel/src/course_representative/presentation/views/add_course_representative_screen.dart';
+import 'package:course_rep_management_panel/src/course_representative/presentation/views/edit_course_representative_screen.dart';
+import 'package:course_rep_management_panel/src/course_representative/presentation/views/level_representatives_view.dart';
+import 'package:course_rep_management_panel/src/dashboard/presentation/app/course_represenatative_information_builder.dart';
+import 'package:course_rep_management_panel/src/dashboard/presentation/views/dashboard.dart';
+import 'package:course_rep_management_panel/src/profile/presentation/views/user_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 part 'router.main.dart';
