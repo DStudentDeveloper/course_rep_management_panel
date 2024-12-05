@@ -1,6 +1,9 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:course_rep_management_panel/core/extensions/context_extensions.dart';
+import 'package:course_rep_management_panel/core/utils/typedefs.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/sign_up_screen.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/verify_email_screen.dart';
+import 'package:course_rep_management_panel/src/profile/presentation/views/user_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -39,11 +42,22 @@ class LoginScreen extends StatelessWidget {
         );
       },
       actions: [
-        AuthStateChangeAction<SignedIn>((context, state) {
+        AuthStateChangeAction<SignedIn>((context, state) async {
           if (!state.user!.emailVerified) {
-            context.go(VerifyEmailScreen.path);
+            return context.go(VerifyEmailScreen.path);
+          }
+          // Pretty certain the user is verified
+          final router = GoRouter.of(context);
+          final user = FirebaseAuth.instance.currentUser!;
+          final response = await FirebaseFunctions.instance
+              .httpsCallable('makeAdmin')
+              .call<DataMap>({'uid': user.uid});
+          await FirebaseAuth.instance
+              .signInWithCustomToken(response.data['token'] as String);
+          if (state.user!.displayName == null) {
+            router.go(UserProfileScreen.path);
           } else {
-            context.go('/');
+            router.go('/');
           }
         }), // authFailed,
       ],
