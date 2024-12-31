@@ -16,14 +16,19 @@ class AddFacultyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<AcademicStructureCubit>(),
-      child: const Row(
-        children: [
-          Spacer(),
-          Expanded(flex: 3, child: AddFacultyPage()),
-        ],
-      ),
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        final width = constraints.maxWidth;
+        return BlocProvider(
+          create: (_) => sl<AcademicStructureCubit>(),
+          child: Row(
+            children: [
+              if (width >= 992) const Spacer(),
+              const Expanded(flex: 3, child: AddFacultyPage()),
+            ],
+          ),
+        );
+      },
     );
   }
 }

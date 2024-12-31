@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:course_rep_management_panel/core/extensions/context_extensions.dart';
+import 'package:course_rep_management_panel/core/utils/core_utils.dart';
 import 'package:course_rep_management_panel/core/utils/typedefs.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/sign_up_screen.dart';
 import 'package:course_rep_management_panel/src/auth/presentation/views/verify_email_screen.dart';
@@ -46,6 +49,7 @@ class LoginScreen extends StatelessWidget {
           if (!state.user!.emailVerified) {
             return context.go(VerifyEmailScreen.path);
           }
+          unawaited(CoreUtils.showSnackBar(message: 'Hold on a sec...'));
           // Pretty certain the user is verified
           final router = GoRouter.of(context);
           final user = FirebaseAuth.instance.currentUser!;

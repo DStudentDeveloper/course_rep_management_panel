@@ -31,7 +31,6 @@ class InputFormField extends StatelessWidget {
   final String? hintText;
   final bool readOnly;
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -44,19 +43,21 @@ class InputFormField extends StatelessWidget {
           labelText: required ? null : label,
           prefixText: prefixText,
           hintText: hintText,
-          label: required && label != null ?  Text.rich(
-            TextSpan(
-              text: label,
-              style: context.theme.inputDecorationTheme.labelStyle,
-              children: const [
-                TextSpan(
-                  text: ' *',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ],
-            ),
-          ) : null,
-          border: switch(border) {
+          label: required && label != null
+              ? Text.rich(
+                  TextSpan(
+                    text: label,
+                    style: context.theme.inputDecorationTheme.labelStyle,
+                    children: const [
+                      TextSpan(
+                        text: ' *',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                )
+              : null,
+          border: switch (border) {
             InputBorderType.none => InputBorder.none,
             InputBorderType.underline => const UnderlineInputBorder(),
             InputBorderType.outline => const OutlineInputBorder(),

@@ -130,34 +130,33 @@ class _CoursesDropdownWidgetState extends State<CoursesDropdownWidget> {
                     }
                     return null;
                   },
-
                   inputDecorationTheme: InputDecorationTheme(
                     labelStyle: const TextStyle(color: Colors.black),
                     errorBorder: switch (widget.border) {
                       InputBorderType.none => InputBorder.none,
                       InputBorderType.underline => UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color:  Colors.red.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.red.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                       InputBorderType.outline => OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.red.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                     },
                     disabledBorder: switch (widget.border) {
                       InputBorderType.none => InputBorder.none,
                       InputBorderType.underline => UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                       InputBorderType.outline => OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                     },
                     border: switch (widget.border) {
                       InputBorderType.none => InputBorder.none,

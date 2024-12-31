@@ -1,6 +1,5 @@
 import 'package:course_rep_management_panel/core/common/widgets/dropdown_menu_form_field.dart';
 import 'package:course_rep_management_panel/core/common/widgets/label_text.dart';
-import 'package:course_rep_management_panel/core/extensions/context_extensions.dart';
 import 'package:course_rep_management_panel/core/services/injection_container.dart';
 import 'package:course_rep_management_panel/core/utils/core_utils.dart';
 import 'package:course_rep_management_panel/core/utils/enums/input_border.dart';
@@ -122,7 +121,6 @@ class _LevelsDropdownWidgetState extends State<LevelsDropdownWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const LabelText('Level', required: true),
-
                 const Gap(10),
                 DropdownMenuFormField<Level>(
                   enabled: remoteLevels.isNotEmpty,
@@ -139,15 +137,15 @@ class _LevelsDropdownWidgetState extends State<LevelsDropdownWidget> {
                     errorBorder: switch (widget.border) {
                       InputBorderType.none => InputBorder.none,
                       InputBorderType.underline => UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color:  Colors.red.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.red.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                       InputBorderType.outline => OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red.shade800.withOpacity(.5),
+                          borderSide: BorderSide(
+                            color: Colors.red.shade800.withOpacity(.5),
+                          ),
                         ),
-                      ),
                     },
                     disabledBorder: switch (widget.border) {
                       InputBorderType.none => InputBorder.none,

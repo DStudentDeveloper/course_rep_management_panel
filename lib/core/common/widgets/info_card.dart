@@ -10,10 +10,11 @@ class InfoCard extends StatefulWidget {
     this.onTap,
     this.onEdit,
     this.onDelete,
-  }) : assert(
+  })  : assert(
           infoText != null || child != null,
           'infoText or child must be provided',
-        ), assert(
+        ),
+        assert(
           infoText == null || child == null,
           'infoText and child cannot be provided at the same time',
         );
@@ -52,17 +53,18 @@ class _InfoCardState extends State<InfoCard> {
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: widget.child ?? Center(
-                    child: Text(
-                      widget.infoText!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  child: widget.child ??
+                      Center(
+                        child: Text(
+                          widget.infoText!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
                 ),
               ),
             ),

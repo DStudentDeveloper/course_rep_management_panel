@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     FirebaseFunctions.instance.useFunctionsEmulator('127.0.0.1', 5001);
   }
   FirebaseUIAuth.configureProviders([EmailAuthProvider()]);
-
+  usePathUrlStrategy();
   await init();
   runApp(
     Provider(

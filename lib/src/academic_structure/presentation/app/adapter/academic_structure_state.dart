@@ -65,6 +65,7 @@ final class CourseDeleted extends AcademicStructureState {
 final class LevelDeleted extends AcademicStructureState {
   const LevelDeleted();
 }
+
 final class LevelsAdded extends AcademicStructureState {
   const LevelsAdded();
 }

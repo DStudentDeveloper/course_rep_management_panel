@@ -23,14 +23,18 @@ class AddLevelView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<AcademicStructureCubit>(),
-      child: const Row(
-        children: [
-          Spacer(),
-          Expanded(flex: 3, child: AddLevelPage()),
-        ],
-      ),
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        return BlocProvider(
+          create: (_) => sl<AcademicStructureCubit>(),
+          child: Row(
+            children: [
+              if (constraints.maxWidth >= 992) const Spacer(),
+              const Expanded(flex: 3, child: AddLevelPage()),
+            ],
+          ),
+        );
+      },
     );
   }
 }

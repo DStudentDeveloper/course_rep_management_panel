@@ -11,13 +11,25 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 class DashboardDrawer extends StatelessWidget {
-  const DashboardDrawer({required this.state, super.key});
+  const DashboardDrawer({
+    required this.state,
+    this.isStatic = false,
+    super.key,
+  });
 
   final GoRouterState state;
+  final bool isStatic;
 
   @override
   Widget build(BuildContext context) {
     final foregroundColour = context.theme.colorScheme.onPrimary;
+
+    void closeDrawer() {
+      if (!isStatic) {
+        Scaffold.of(context).closeDrawer();
+      }
+    }
+
     return Drawer(
       backgroundColor: context.theme.colorScheme.primary,
       child: StreamBuilder<User?>(
@@ -38,25 +50,43 @@ class DashboardDrawer extends StatelessWidget {
             children: [
               DrawerHeader(
                 child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
                     children: [
-                      Flexible(
-                        child: Text(
-                          user.displayName ?? 'Unknown User',
-                          style: context.theme.textTheme.titleLarge?.copyWith(
+                      if (!isStatic)
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
                             color: foregroundColour,
+                            onPressed: () {
+                              Scaffold.of(context).closeDrawer();
+                            },
+                            icon: const Icon(IconlyBroken.close_square),
                           ),
                         ),
-                      ),
-                      const Gap(8),
-                      Flexible(
-                        child: IconButton(
-                          color: foregroundColour,
-                          onPressed: () {
-                            context.navigateTo(UserProfileScreen.path);
-                          },
-                          icon: const Icon(IconlyBroken.edit),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                user.displayName ?? 'Unknown User',
+                                style: context.theme.textTheme.titleLarge
+                                    ?.copyWith(
+                                  color: foregroundColour,
+                                ),
+                              ),
+                            ),
+                            const Gap(8),
+                            Flexible(
+                              child: IconButton(
+                                color: foregroundColour,
+                                onPressed: () {
+                                  context.navigateTo(UserProfileScreen.path);
+                                },
+                                icon: const Icon(IconlyBroken.edit),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -79,6 +109,7 @@ class DashboardDrawer extends StatelessWidget {
                             iconColor: foregroundColour,
                             textColor: foregroundColour,
                             onTap: () {
+                              closeDrawer();
                               context.go('/');
                             },
                           ),
@@ -89,6 +120,7 @@ class DashboardDrawer extends StatelessWidget {
                               iconColor: foregroundColour,
                               textColor: foregroundColour,
                               onTap: () {
+                                closeDrawer();
                                 context.go(
                                   '/faculties'
                                   '/${info.courseRepresentativeFaculty!.id}'
@@ -103,6 +135,7 @@ class DashboardDrawer extends StatelessWidget {
                               iconColor: foregroundColour,
                               textColor: foregroundColour,
                               onTap: () {
+                                closeDrawer();
                                 context.go(
                                   '/faculties'
                                   '/${info.courseRepresentativeFaculty!.id}'

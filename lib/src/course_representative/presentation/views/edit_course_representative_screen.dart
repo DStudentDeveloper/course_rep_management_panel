@@ -82,13 +82,19 @@ class _EditCourseRepresentativeViewState
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.representative.name)
-      ..addListener(() => changeNotifier.value = nameChanged());
+      ..addListener(() {
+        changeNotifier.value = nameChanged() || emailChanged() || idChanged();
+      });
     emailController = TextEditingController(
       text: widget.representative.studentEmail,
-    )..addListener(() => changeNotifier.value = emailChanged());
+    )..addListener(() {
+        changeNotifier.value = emailChanged() || nameChanged() || idChanged();
+      });
     indexNumberController = TextEditingController(
       text: widget.representative.indexNumber,
-    )..addListener(() => changeNotifier.value = idChanged());
+    )..addListener(() {
+        changeNotifier.value = idChanged() || nameChanged() || emailChanged();
+      });
   }
 
   @override

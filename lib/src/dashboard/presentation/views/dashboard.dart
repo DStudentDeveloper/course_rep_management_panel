@@ -19,92 +19,113 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          Expanded(child: DashboardDrawer(state: state)),
-          Expanded(
-            flex: 3,
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                toolbarHeight: 160,
-                title: const Text('COURSE REPRESENTATIVE MANAGEMENT SYSTEM'),
-              ),
-              body: child,
-              floatingActionButton: StatefulBuilder(
-                builder: (_, setState) {
-                  if (state.fullPath == AddCourseRepresentativeScreen.path) {
-                    return const SizedBox.shrink();
-                  }
-
-                  var depth = Depth.faculty;
-                  if (state.fullPath!.endsWith('/courses')) {
-                    depth = Depth.course;
-                  } else if (state.fullPath!.endsWith('/levels')) {
-                    depth = Depth.level;
-                  }
-                  return SpeedDial(
-                    icon: Icons.add,
-                    activeIcon: Icons.close,
-                    overlayColor: Colors.transparent,
-                    overlayOpacity: 0,
-                    children: [
-                      SpeedDialChild(
-                        onTap: () {
-                          context.navigateTo(
-                            AddCourseRepresentativeScreen.path,
-                            extra: {
-                              'refreshAfterAdd': (!kIsWeb && !kIsWasm) &&
-                                  state.fullPath!.endsWith('/representatives'),
-                            },
-                          );
-                          setState(() {});
-                        },
-                        backgroundColor: Colors.transparent,
-                        labelStyle: const TextStyle(color: Colors.black),
-                        label: 'Add Course Representative',
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.orange,
-                          ),
-                          child: const Icon(Icons.add),
-                        ),
-                      ),
-                      if (!state.fullPath!.endsWith('/representatives'))
-                        SpeedDialChild(
-                          onTap: () {
-                            CoreUtils.showCustomDialog(
-                              context,
-                              dialog: switch (depth) {
-                                Depth.faculty => const AddFacultyView(),
-                                Depth.course => const AddCourseView(),
-                                Depth.level => const AddLevelView(),
-                              },
-                            );
-                          },
-                          backgroundColor: Colors.transparent,
-                          labelStyle: const TextStyle(color: Colors.black),
-                          label: 'Add ${depth.value}',
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xFFd82a23),
-                            ),
-                            child: const Icon(Icons.add),
-                          ),
-                        ),
-                    ],
-                  );
-                },
-              ),
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final body = Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            toolbarHeight: width < 992 ? null : 160,
+            title: switch (width) {
+              < 992 => const FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text('COURSE REPRESENTATIVE MANAGEMENT SYSTEM'),
+                ),
+              _ => const Text('COURSE REPRESENTATIVE MANAGEMENT SYSTEM'),
+            },
           ),
-        ],
-      ),
+          drawer: width < 992 ? DashboardDrawer(state: state) : null,
+          body: child,
+          floatingActionButton: StatefulBuilder(
+            builder: (_, setState) {
+              if (state.fullPath == AddCourseRepresentativeScreen.path) {
+                return const SizedBox.shrink();
+              }
+
+              var depth = Depth.faculty;
+              if (state.fullPath!.endsWith('/courses')) {
+                depth = Depth.course;
+              } else if (state.fullPath!.endsWith('/levels')) {
+                depth = Depth.level;
+              }
+              return SpeedDial(
+                icon: Icons.add,
+                activeIcon: Icons.close,
+                overlayColor: Colors.transparent,
+                overlayOpacity: 0,
+                children: [
+                  SpeedDialChild(
+                    onTap: () {
+                      context.navigateTo(
+                        AddCourseRepresentativeScreen.path,
+                        extra: {
+                          'refreshAfterAdd': (!kIsWeb && !kIsWasm) &&
+                              state.fullPath!.endsWith('/representatives'),
+                        },
+                      );
+                      setState(() {});
+                    },
+                    backgroundColor: Colors.transparent,
+                    labelStyle: const TextStyle(color: Colors.black),
+                    label: 'Add Course Representative',
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.orange,
+                      ),
+                      child: const Icon(Icons.add),
+                    ),
+                  ),
+                  if (!state.fullPath!.endsWith('/representatives'))
+                    SpeedDialChild(
+                      onTap: () {
+                        CoreUtils.showCustomDialog(
+                          context,
+                          dialog: switch (depth) {
+                            Depth.faculty => const AddFacultyView(),
+                            Depth.course => const AddCourseView(),
+                            Depth.level => const AddLevelView(),
+                          },
+                        );
+                      },
+                      backgroundColor: Colors.transparent,
+                      labelStyle: const TextStyle(color: Colors.black),
+                      label: 'Add ${depth.value}',
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFFd82a23),
+                        ),
+                        child: const Icon(Icons.add),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        );
+        return Scaffold(
+          body: switch (width) {
+            < 992 => RefreshIndicator(
+                onRefresh: () async => context.go(state.fullPath!),
+                child: body,
+              ),
+            _ => Row(
+                children: [
+                  Expanded(
+                    child: DashboardDrawer(state: state, isStatic: true),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: body,
+                  ),
+                ],
+              ),
+          },
+        );
+      },
     );
   }
 }

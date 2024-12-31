@@ -15,7 +15,7 @@ class Dial extends StatelessWidget {
           child: const Icon(Icons.arrow_drop_up),
           onTap: () {
             final currentValue = int.tryParse(controller.text) ?? 0;
-            if(currentValue >= 900) return;
+            if (currentValue >= 900) return;
             controller.text = (currentValue + 100).toString();
           },
         ),

@@ -18,10 +18,10 @@ class HundredsInputFormatter extends TextInputFormatter {
     if (inputNumber != null && inputNumber > 0) {
       // Format the input as multiples of 100
       var formattedValue = (inputNumber * 100).toString();
-      if(formattedValue.length > 3) {
+      if (formattedValue.length > 3) {
         formattedValue = formattedValue.substring(0, 3);
       }
-      if(int.parse(formattedValue) % 100 != 0) {
+      if (int.parse(formattedValue) % 100 != 0) {
         formattedValue = '100';
       }
       return TextEditingValue(

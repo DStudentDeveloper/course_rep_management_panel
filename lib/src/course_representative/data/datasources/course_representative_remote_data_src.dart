@@ -130,11 +130,26 @@ class CourseRepresentativeRemoteDataSrcImpl
           .collection('course_representatives')
           .doc(uid);
 
+      final courseRepresentativeConsumerDoc =
+          _firestore.collection('course_representatives').doc(uid);
+
+      final batch = _firestore.batch();
       final courseRepresentativeToUpload =
           (courseRepresentative as CourseRepresentativeModel)
               .copyWith(id: courseRepresentativeDoc.id);
 
-      await courseRepresentativeDoc.set(courseRepresentativeToUpload.toMap());
+      final consumerData = courseRepresentativeToUpload.toMap();
+      consumerData['facultyName'] = courseRepresentative.faculty.name;
+      consumerData['courseName'] = courseRepresentative.course.name;
+      consumerData['levelName'] = courseRepresentative.level.name;
+
+      batch
+        ..set(courseRepresentativeDoc, courseRepresentativeToUpload.toMap())
+        ..set(
+          courseRepresentativeConsumerDoc,
+          consumerData,
+        );
+      await batch.commit();
     } on FirebaseException catch (e) {
       return NetworkUtils.handleRemoteSourceException<void>(
         e,
@@ -186,7 +201,9 @@ class CourseRepresentativeRemoteDataSrcImpl
           if (updateToBeUploaded case {'studentEmail': final email})
             'email': email,
         });
-        await _firestore
+        final batch = _firestore.batch();
+
+        final courseRepresentativeDoc = _firestore
             .collection('faculties')
             .doc(facultyId)
             .collection('courses')
@@ -194,8 +211,16 @@ class CourseRepresentativeRemoteDataSrcImpl
             .collection('levels')
             .doc(levelId)
             .collection('course_representatives')
-            .doc(courseRepresentativeId)
-            .update(updateToBeUploaded);
+            .doc(courseRepresentativeId);
+
+        final courseRepresentativeConsumerDoc = _firestore
+            .collection('course_representatives')
+            .doc(courseRepresentativeId);
+
+        batch
+          ..update(courseRepresentativeDoc, updateToBeUploaded)
+          ..update(courseRepresentativeConsumerDoc, updateToBeUploaded);
+        await batch.commit();
       }
     } on FirebaseException catch (e) {
       return NetworkUtils.handleRemoteSourceException<void>(
@@ -233,7 +258,8 @@ class CourseRepresentativeRemoteDataSrcImpl
         'uid': courseRepresentativeId,
       });
 
-      await _firestore
+      final batch = _firestore.batch();
+      final courseRepresentativeDoc = _firestore
           .collection('faculties')
           .doc(facultyId)
           .collection('courses')
@@ -241,8 +267,16 @@ class CourseRepresentativeRemoteDataSrcImpl
           .collection('levels')
           .doc(levelId)
           .collection('course_representatives')
-          .doc(courseRepresentativeId)
-          .delete();
+          .doc(courseRepresentativeId);
+
+      final courseRepresentativeConsumerDoc = _firestore
+          .collection('course_representatives')
+          .doc(courseRepresentativeId);
+
+      batch
+        ..delete(courseRepresentativeDoc)
+        ..delete(courseRepresentativeConsumerDoc);
+      await batch.commit();
     } on FirebaseException catch (e) {
       return NetworkUtils.handleRemoteSourceException<void>(
         e,

@@ -1,4 +1,3 @@
-
 enum Depth {
   faculty('Faculty'),
   course('Course'),
