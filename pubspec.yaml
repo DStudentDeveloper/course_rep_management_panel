@@ -7,7 +7,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  bloc: ^8.1.4
+  bloc: ^9.0.0
   cloud_firestore: ^5.6.1
   dartz: ^0.10.1
   device_preview: ^1.2.0
@@ -17,7 +17,7 @@ dependencies:
   firebase_ui_auth: ^1.16.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.0.0
   flutter_localizations:
     sdk: flutter
   get_it: ^8.0.3
@@ -27,7 +27,7 @@ dependencies:
   provider: ^6.1.2
 
 dev_dependencies:
-  bloc_test: ^9.1.7
+  bloc_test: ^10.0.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4
